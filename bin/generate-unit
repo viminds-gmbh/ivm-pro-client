@@ -1,0 +1,32 @@
+#!/usr/bin/php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+(function() {
+    $n = PHP_EOL;
+    $info = "Generates the Unit model from an API detail response.$n";
+    $usage = "Usage:$n  generate-unit -s<subdomain> -i<flat_id>$n";
+    $optinfo = "Options:$n";
+    $optinfo .= "  -s  The IVM user's assigned subdomain, i. e. https://<subdomain>.ivm-professional.de$n";
+    $optinfo .= "  -i  The `flat_id` of any available unit.$n";
+    if (isset(getopt('', ['help'])['help'])) {
+        echo $info . $n . $usage . $n . $optinfo;
+        exit(0);
+    }
+
+    $opts = getopt('s:i:');
+
+    $error = '';
+    if (empty($opts['s'])) {
+        $error .= 'User subdomain (-s) is required.';
+    }
+    if (empty($opts['i'])) {
+        $error .= ($error ? ' ' : '') . 'Flat ID (-i) is required.';
+    }
+    if ($error) {
+        throw new \Exception($error . $n . $n . 'Help:' . $n . $n . $info . $usage . $optinfo . $n);
+    }
+
+    (new \Qbus\IvmProClient\Generator\UnitGenerator($opts['s'], $opts['i']))->generateUnit();
+})();

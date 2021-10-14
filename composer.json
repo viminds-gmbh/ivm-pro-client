@@ -1,0 +1,26 @@
+{
+    "name": "qbus/ivm-pro-client",
+    "description": "Client library for the IVM Professional JSON API",
+    "type": "library",
+    "require": {
+        "php": "^7.4"
+    },
+    "require-dev": {
+        "nette/php-generator": "^3.6",
+        "symfony/http-client": "^5.3",
+        "nyholm/psr7": "^1.4",
+        "psr/http-client": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Qbus\\IvmProClient\\": "src/"
+        }
+    },
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Alex Wuttke",
+            "email": "alw@qbus.de"
+        }
+    ]
+}
