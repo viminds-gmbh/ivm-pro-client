@@ -4,7 +4,9 @@ namespace Qbus\IvmProClient;
 
 use Qbus\IvmProClient\ApiRequest\ApiRequestInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use RuntimeException;
 
 use function filter_var;
@@ -20,11 +22,15 @@ class ApiClient
     public const BASE_URL = 'https://%s.ivm-professional.de/modules/json/';
 
     private $httpClient;
+    private $httpRequestFactory;
+    private $httpStreamFactory;
     private $subdomain;
 
-    public function __construct(ClientInterface $httpClient, string $subdomain)
+    public function __construct(ClientInterface $httpClient, RequestFactoryInterface $httpRequestFactory, StreamFactoryInterface $httpStreamFactory, string $subdomain)
     {
         $this->httpClient = $httpClient;
+        $this->httpRequestFactory = $httpRequestFactory;
+        $this->httpStreamFactory = $httpStreamFactory;
         $this->subdomain = $subdomain;
     }
 
@@ -47,12 +53,12 @@ class ApiClient
         if (!empty($query) && $method === 'GET') {
             $url .= '?' . $query;
         }
-        $request = $this->httpClient->createRequest(
+        $request = $this->httpRequestFactory->createRequest(
             $method,
             $url
         );
         if (!empty($query) && $method === 'POST') {
-            $request = $request->withBody($this->httpClient->createStream($query));
+            $request = $request->withBody($this->httpStreamFactory->createStream($query));
         }
         $response = $this->httpClient->sendRequest($request);
 
