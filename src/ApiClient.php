@@ -5,7 +5,9 @@ namespace Qbus\IvmProClient;
 use Qbus\IvmProClient\ApiRequest\ApiRequestInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
+use RuntimeException;
 
+use function filter_var;
 use function get_object_vars;
 use function http_build_query;
 use function is_array;
@@ -30,6 +32,10 @@ class ApiClient
     {
         $method = $apiRequest->getRequestMethod();
         $url = sprintf(self::BASE_URL, $this->subdomain) . $apiRequest->getRequestPath();
+
+        if (filter_var($url, FILTER_VALIDATE_URL) === false) {
+            throw new RuntimeException('Invalid URL "' . $url . '".');
+        }
 
         $properties = get_object_vars($apiRequest);
         $requestData = [];
