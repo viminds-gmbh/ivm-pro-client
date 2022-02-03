@@ -2,7 +2,7 @@
 
 namespace Qbus\IvmProClient\ApiRequest;
 
-class ClientMessageTrait
+trait ClientMessageTrait
 {
     public string $client_name;
     public string $client_firstname;
