@@ -3,7 +3,7 @@
     "description": "Client library for the IVM Professional JSON API",
     "type": "library",
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^7.4 || ^8.1",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.0"
     },
