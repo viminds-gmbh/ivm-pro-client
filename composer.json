@@ -1,5 +1,5 @@
 {
-    "name": "viminds-gmbh/ivm-pro-client",
+    "name": "qbus/ivm-pro-client",
     "description": "Client library for the IVM Professional JSON API",
     "type": "library",
     "require": {
